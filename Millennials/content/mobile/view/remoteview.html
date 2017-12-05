@@ -1,0 +1,156 @@
+<div data-role="view" id="remoteview" data-layout="mobile-viewZ" data-title="Latest Posts">
+    <div data-role="header">
+        <div data-role="navbar">
+            <a id="back-button" class="nav-button" data-align="left" data-role="backbutton">Back</a>
+            <span data-role="view-title" onclick="fullScreen()"></span>
+            <a data-align="right" data-rel="popover" href="#popover-people" data-role="button" data-icon="contacts"></a>
+            
+        </div>
+    </div>
+    
+    <ul data-role="buttongroup" data-index="1" class="km-small">
+        <li data-icon="play" style="border: none;"></li>
+        <li data-icon="pause" style="border: none;"></li>
+        <li data-icon="rewind" style="border: none;"></li>
+        <li data-icon="fastforward" style="border: none;"></li>
+        <li data-icon="refresh" onclick="refreshRemote()" style="border: none;"></li>
+    </ul>
+    
+    <div id="pageview" style="background-color: #f8fafb; padding: 0.1em 0; "></div>
+    
+    <!-- popover-->
+    <div data-role="popover" id="popover-people" data-popup='{"height": "20em", "width": "20em"}'>
+        <div data-role="view" data-title="Actions">
+            <div data-role="header">
+                <div data-role="navbar" class="km-light">
+                    <span data-role="view-title"></span>
+                    <a data-role="button" data-align="right" data-click="closeParentPopover" data-icon="close"></a>
+                </div>
+            </div>
+            <ul data-role="listview">
+                <li><label>Full Screen<input type="checkbox" onclick="fullScreen()"></label></li>
+                <li><label>Josh Anderson<input type="checkbox"></label></li>
+                <li><label>Linda Anderson<input type="checkbox"></label></li>
+                <li><label>Oliver Anderson<input type="checkbox"></label></li>
+                <li><label>James Williams<input type="checkbox"></label></li>
+                <li><label>Barbara Williams<input type="checkbox"></label></li>
+            </ul>
+        </div>
+    </div>
+    <!-- / popover -->
+</div>
+
+
+
+<script>
+    function refreshRemote() {
+        //$.get("http://localhost/MGEN/wordpress-posts-in-vue-js/index-p2.html", function (data) {
+       // $.get("http://biz-park.co.za/demo/tmpost/index-p2.html", function (data) {
+        $.get("http://datasat.co.za/wp-content/apps/tmg/posts/index-p3.html", function (data) {
+            $('#pageview').html(data);
+            // $('#btnReg2').html('Login');
+       });
+    }
+
+    refreshRemote();
+    //duplicated from js/index.js //post.
+    function showFull(elmnt, disp, postid) {
+        var GetPostid = postid;
+        elmnt.style.display = disp;
+        elmnt.id = elmnt.id + 'hidden';
+        // alert(name);
+        document.getElementById(GetPostid).style.display = 'block';
+        // this('div').className = "excerpt hide";
+    }
+</script>
+<!-- modal-->
+<div data-role="modalview" id="modalview-login" style="width: 90%;">
+    <div data-role="header">
+        <div data-role="navbar">
+            <span>Login</span>
+            <a data-click="closeModalViewLogin" data-role="button" data-align="right">Cancel</a>
+        </div>
+    </div>
+    <ul data-role="listview" data-style="inset">
+        <li><label for="username">Username: <input type="text" id="username" /></label></li>
+        <li><label for="password">Password: <input type="password" id="password" /></label></li>
+    </ul>
+    <div data-role="footer">
+        <div data-role="navbar">
+            <a data-click="closeModalViewLogin" id="modalview-login-button" type="button" data-role="button" data-align="right">Login</a>
+            <a data-click="closeModalViewLogin" id="modalview-reg-button" type="button" data-role="button" data-align="right">Register</a>
+        </div>
+    </div>
+</div>
+<!-- modal-->
+ <style type="text/css" media="screen">
+    h1.app-logo {
+        margin: 3em 0;
+        font-size: 3em;
+        font-weight: 100;
+        text-transform: uppercase;
+        text-align: center;
+        line-height: .9em;
+    }
+
+    .action-buttons {
+        margin: 1em;
+    }
+</style>
+<script>
+    function closeModalViewLogin() {
+        $("#modalview-login").kendoMobileModalView("close");
+    }
+</script>
+
+<script>
+    function closeParentPopover(e) {
+
+        var popover = e.sender.element.closest('[data-role=popover]').data('kendoMobilePopOver');
+
+        popover.close();
+    }
+</script>
+
+
+<script>
+    //FULL SCREEN
+    var screenState;
+function fullScreen() {
+    if(screenState != "full"){
+    screenState = "full";
+   // alert("FS");
+    // Find the right method, call on correct element
+    function launchIntoFullscreen(element) {
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) {
+            element.msRequestFullscreen();
+        }
+    }
+
+    // Launch fullscreen for browsers that support it!
+    launchIntoFullscreen(document.documentElement);
+
+}else{exitFullscreen();
+screenState = "notfull";}
+
+
+}
+
+function exitFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    }
+}
+</script>
+/////////////
+

@@ -23,16 +23,360 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World!</title>
+        <title>Millennials</title>
+        
+         <link href="css/kendo.mobile.all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="media_scipts/mediaelementplayer.min.css">
+    <link rel="stylesheet" href="css/circle-menu.min.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/kendo.all.min.js"></script>
+    <script src="js/console.js"></script>
+        
+         <script type="text/javascript" charset="utf-8">
+        var NAV_JSON_URL = "content/mobile-nav.json";
+    </script>
+        
+         <style>
+        .sales-down,
+        .sales-hold,
+        .sales-up,
+        .value {
+            float: right;
+        }
+
+        .sales-up {
+            color: #4caf50;
+        }
+
+        .sales-down {
+            color: #ff4350;
+        }
+
+        .sales-hold {
+            color: #2196f3;
+        }
+
+        .value {
+            color: #c7cdd0;
+        }
+
+      
+
+        .km-root .km-drawer-button:before, .km-root .km-drawer-button:after {
+            content: "\E077";
+        }
+
+        .account-info {
+            float: right;
+            font-weight: bold;
+        }
+
+        #feedback textarea {
+            float: none;
+            width: 100%;
+            resize: none;
+        }
+
+        #feedback .km-content [data-role=button] {
+            display: block;
+            margin: 1em;
+        }
+
+            #feedback .km-content [data-role=button] span {
+                display: block;
+                text-align: center;
+                font-size: 1.2em;
+            }
+
+        .km-nova .km-navbar {
+            background-image: url(images/bg-strip.png);
+            background-size: contain;
+        }
+
+        .km-nova .km-tabstrip {
+            background-image: url(images/bg-strip.png);
+            background-size: contain;
+        }
+        .km-nova .km-tabstrip .km-button.km-state-active {
+            background-image: url(images/bg-strip.png);
+            background-size: contain;
+            }
+
+        .km-novaXX .km-contentXX {
+            color: #32364c;
+            background-color: rgb(33, 33, 33);
+        }
+    </style>
+        
     </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
+    <body id="examples">
+    
+    <!-- circ menu -->
+    <nav id="circMen" class="c-circle-menu js-menu" style=" z-index:5999; bottom:55px;">
+        <button id="btncX" class="c-circle-menu__toggle js-menu-toggle" style="background-image: url(images/icon-nav3.png); background-size: contain; border: 0px solid #1d1d1d;right: 300%; bottom: -50px; opacity: 0.0;">
+            <span style="display: none;">Toggle</span>
+        </button>
+        <ul class="c-circle-menu__items">
+            <li class="c-circle-menu__item">
+                <a href="#scrollview/mobile.html" class="c-circle-menu__link">
+                    <img src="images/hot-wh.svg" alt="" onClick="setHotlist()">
+                </a>
+            </li>
+            <li class="c-circle-menu__item">
+                <a href="#scrollview/custom-template.html" class="c-circle-menu__link">
+                    <img src="images/playvid-wh.svg" alt="" onClick="setFrmVideo()">
+                </a>
+            </li>
+            <li class="c-circle-menu__item">
+                <a href="#" class="c-circle-menu__link">
+                    <img src="images/music-wh.svg" alt="" onClick="setMusic()">
+                </a>
+            </li>
+            <li class="c-circle-menu__item">
+                <a href="#scrollview/databinding.html" class="c-circle-menu__link">
+                    <img src="images/search2-wh.svg" alt="" onClick="setSearch()">
+                </a>
+            </li>
+            <li class="c-circle-menu__item">
+                <a href="#" class="c-circle-menu__link">
+                    <img src="images/people-wh.svg" alt="" onClick="setPeople()">
+                </a>
+            </li>
+        </ul>
+        <div id="msk" class="c-circle-menu__mask js-menu-mask">
+            
+            <header class="demo-header" style="position: relative; z-index: 80;">
+
+                <a href="#" class="demo-header-nav__link" style="font-size: 22pt; position: absolute; right: 45%; height: 55px; margin-top: 160%; border-radius: 0px 0px 10px 10px;" onClick="setBck()"> <i class="fa fa-close"></i><span class="js-menu-toggle" style="display: none;">Toggle</span></a>
+
+            </header>
+
+            <div id="topbarpic" class="" style="height:90%; display:none; ">
+                <div style="background-color: rgba(136, 134, 134, 0.5); border-radius: 80px; width: 40px; margin: 10px; height: 40px; text-align: center;">
+                    <a href="#tabstrip-home" data-icon="contacts"><img id="headIconx" style="max-width: 20px;  margin-top: 8px;" src="images/barrow.png" alt="" data-pin-nopin="true"></a>
+                </div>
+                <div id="listBoxXX" class="maskBox"></div>
+            </div>
+
+        </div>
+    </nav>
+    <script src="js/circleMenu.min.js"></script>
+    <script>
+        var el = '.js-menu';
+        var myMenu = cssCircleMenu(el);
+
+        function logoClick() {
+            document.getElementById("form1").className = 'container show';
+            document.getElementById("iconHome").className = 'hide';
+        };
+
+        function setBck() {
+            document.getElementById("msk").className = 'c-circle-menu__mask js-menu-mask';
+          //  document.getElementById("btnc").className = 'c-circle-menu__toggle js-menu-toggle';
+            document.getElementById("circMen").className = 'c-circle-menu js-menu';
+
+        };
+
+        function soundCloudSetMain() {
+            document.getElementById("form1").className = 'container show';
+            document.getElementById("iconHome").className = 'hide';
+            
+        };
+
+        function setFrmVideo() {
+            document.getElementById("circMen").className = 'c-circle-menu js-menu';
+            document.getElementById("msk").className = 'c-circle-menu__mask js-menu-mask';
+        };
+
+        function setPeople() {
+            document.getElementById("circMen").className = 'c-circle-menu js-menu';
+            document.getElementById("msk").className = 'c-circle-menu__mask js-menu-mask';
+          
+        };
+            
+
+        function setMusic() {
+            document.getElementById("circMen").className = 'c-circle-menu js-menu';
+            document.getElementById("msk").className = 'c-circle-menu__mask js-menu-mask';
+         
+        };
+
+        function setSearch() {
+            document.getElementById("circMen").className = 'c-circle-menu js-menu';
+             document.getElementById("msk").className = 'c-circle-menu__mask js-menu-mask';
+          
+        };
+
+        function setHotlist() {
+            document.getElementById("circMen").className = 'c-circle-menu js-menu';
+            document.getElementById("msk").className = 'c-circle-menu__mask js-menu-mask';
+          
+        };
+
+
+    </script>
+    <!-- end circ menu -->   
+
+    <div data-role="view" id="tabstrip-home" data-title="MILLENNIALS" data-show="showApp" data-stretch="true" data-layout="mobile-tabstrip" style="background-color: #212121;">
+        <header data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+              
+            </div>
+        </header>
+
+        <div style="background-color: #212121; padding: 0em 0; text-align: center;"><a href="posts/index-premote.html" class="" data-role="listview-link"><img src="images/bg1.png" width="100%" height="auto" onclick="homeLogo()"></a></div>
+        
+    </div>
+
+    <div data-role="view" id="tabstrip-profile" data-title="Profile" data-layout="mobile-tabstrip">
+        <img src="images/eduardo.jpg" class="km-thumbnail" style="width: 10em; height: 10em; margin: 2em auto; display: block; float: none;">
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                Profile
+                <ul>
+                    <li>Eduardo Batista</li>
+                    <li>Weekly average sales <span class="sales-up">$ 8,250</span></li>
+                    <li>Monthly average sales <span class="sales-up">$ 32,000</span></li>
+                </ul>
+            </li>
+            <li>
+                Languages
+                <ul>
+                    <li>English <span class="value">Native</span></li>
+                    <li>Hungarian <span class="value">Advanced</span></li>
+                    <li>French <span class="value">Advanced</span></li>
+                    <li>Chinese <span class="value">Beginner</span></li>
+                </ul>
+            </li>
+                      
+        </ul>
+    </div>
+    <div data-role="view" id="tabstrip-sales" data-title="Sales History" data-layout="mobile-tabstrip">
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                Sales 2011
+                <ul>
+                    <li>January <span class="sales-up">&uarr; $ 35,000</span></li>
+                    <li>February <span class="sales-down">&darr; $ 25,000</span></li>
+                    <li>March <span class="sales-down">&darr; $ 23,000</span></li>
+                    <li>April <span class="sales-up">&uarr; $ 30,000</span></li>
+                    <li>May <span class="sales-up">&uarr; $ 31,000</span></li>
+                    <li>June <span class="sales-down">&darr; $ 29,000</span></li>
+                    <li>July <span class="sales-up">&uarr; $ 35,000</span></li>
+                    <li>August <span class="sales-up">&uarr; $ 37,000</span></li>
+                    <li>September <span class="sales-hold">&rarr; $ 37,000</span></li>
+                    <li>October <span class="sales-hold">&rarr; $ 37,000</span></li>
+                    <li>November <span class="sales-up">&uarr; $ 38,000</span></li>
+                    <li>December <span class="sales-up">&uarr; $ 40,000</span></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div data-role="view" id="tabstrip-rating" data-title="Rating" data-layout="mobile-tabstrip">
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                Sales Representatives
+                <ul>
+                    <li data-icon="toprated">1. Andrew Fuller</li>
+                    <li data-icon="toprated">2. Janet Leverling</li>
+                    <li data-icon="toprated" style="background-color: #26c6da; color: #fff;">3. Eduardo Batista</li>
+                    <li data-icon="toprated">4. Margaret Johnson</li>
+                    <li data-icon="toprated">5. Steve Collins</li>
+                    <li data-icon="toprated">6. Maria Steward</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div data-role="view" id="tabstrip-settings" data-title="Settings" data-layout="mobile-tabstrip">
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                Eduardo Batista
+                <ul>
+                    <li>Notify when online <input type="checkbox" data-role="switch" checked></li>
+                    <li>Administrator <input type="checkbox" data-role="switch"></li>
+                    <li>Access to stats <input type="checkbox" data-role="switch" checked></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!--add-->
+    <div data-role="view" id="tabstrip-posts" data-title="Posts" data-layout="mobile-tabstrip">
+        <ul data-role="listview" data-style="inset"  data-source="awwDataSourceXX" data-load-more="false" id="awwXX" data-pull-to-refresh="false" data-click="showDetail" class="km-widget km-listview km-list km-virtual-list" style="touch-action: pan-y;">
+            <li data-uid="e0154738-437f-491b-9ce3-7cf99adbc7c0" style="position: relative;">
+                <img class="km-thumbnail" src="images/rdticon.jpg">
+                <p> aww | 232 | 21:32</p>
+                <h5> TEST: Aww Subreddit of the Week</h5>
+                <p style="text-align: right;"><a data-rel="external" href="#" target="_blank">31 comments on Reddit</a></p>
+            </li>
+            <li data-uid="e0154738-437f-491b-9ce3-7cf99adbc7c0" style="position: relative;">
+                <img class="km-thumbnail" src="images/rdticon.jpg">
+                <p> aww | 232 | 21:32</p>
+                <h5> TEST2: Aww Subreddit of the Week</h5>
+                <p style="text-align: right;"><a data-rel="external" href="#" target="_blank">31 comments on Reddit</a></p>
+            </li>
+            <li data-uid="e0154738-437f-491b-9ce3-7cf99adbc7c0" style="position: relative;">
+                <img class="km-thumbnail" src="images/rdticon.jpg">
+                <p> aww | 232 | 21:32</p>
+                <h5> TEST3: Aww Subreddit of the Week</h5>
+                <p style="text-align: right;"><a data-rel="external" href="#" target="_blank">31 comments on Reddit</a></p>
+            </li>
+            <li class="km-load-more" style="display: none;"><div style="display: none;"><span class="km-icon"></span><span class="km-loading-left"></span><span class="km-loading-right"></span></div><a class="km-load km-widget km-button" data-role="button" style="display: none; touch-action: pan-y;"><span class="km-text">Press to load more</span></a></li>
+        </ul>
+
+      </div>
+    <!-- /add-->
+
+   
+
+    <div data-role="layout" data-id="mobile-tabstrip" data-show="showDemoLayout">
+        <header data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+
+               <!--  <a data-role="button" href="#tabstrip-posts" data-icon="mostviewed" data-align="left"></a> -->
+                <a data-align="left" data-icon="arrow-w" data-role="backbutton" class="back-button km-widget km-button km-back" href="#:back" style="touch-action: pan-y;"></a>
+
+                <a data-align="right" data-role="button" class="nav-button" data-icon="home" href="#tabstrip-home"></a>
+               
+            </div>
+        </header>
+        <p>TabStrip</p>
+        <div data-role="footer" style="border-top: 1px solid #171717;">
+            <div data-role="tabstrip">
+                <a href="#tabstrip-profile" data-icon="contacts">
+                    Account
+                </a><a href="#tabstrip-sales" data-icon="compose">
+               Compose
+              </a><a href="#tabstrip-rating" data-icon="favoritesX" id="btn3" style="background-image:url(images/icon-nav2.png);background-size: 80%; background-repeat: no-repeat; background-position: center;">
+              
+              </a><a href="#tabstrip-settings" data-icon="mostviewed" data-badge="21">
+                Inbox
+                </a><a href="#tabstrip-posts" data-icon="bookmarks">Latest</a>
             </div>
         </div>
+    </div>
+   
+    <script>
+
+      setTimeout(function () {
+          homeLogo();
+      }, 500)
+
+
+
+      function homeLogo() {
+
+          //alert("cc");
+
+      }
+    </script>
+
+
+
+    <script src="js/mobile-examples.js"></script>
+
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">

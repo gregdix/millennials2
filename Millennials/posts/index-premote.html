@@ -1,0 +1,196 @@
+﻿<div data-role="view" id="remoteview" data-layout="mobile-view" data-title="Latest Posts">
+    <div data-role="header">
+        <div data-role="navbar">
+            <a id="back-button" class="nav-button" data-align="left" data-role="backbutton">Back</a>
+            <span data-role="view-title"></span>
+            <a data-align="right" data-rel="popover" href="#popover-people" data-role="button" data-icon="more"></a>
+
+        </div>
+    </div>
+
+    <ul data-role="buttongroup" data-index="1" class="km-small" style="display:none">
+        <li data-icon="play" style="border: none;"></li>
+        <li data-icon="pause" style="border: none;"></li>
+        <li data-icon="rewind" style="border: none;"></li>
+        <li data-icon="fastforward" style="border: none;"></li>
+        <li data-icon="refresh" style="border: none;"></li>
+    </ul>
+
+    <!-- popover-->
+    <div data-role="popover" id="popover-people" data-popup='{"height": "20em", "width": "20em"}'>
+        <div data-role="view" data-title="Filter by Category">
+            <div data-role="header">
+                <div data-role="navbar" class="km-light">
+                    <span data-role="view-title"></span>
+                    <a data-role="button" data-align="right" data-click="closeParentPopover" data-icon="close"></a>
+                </div>
+            </div>
+            <ul data-role="listview">
+                <li><label>Fashion<input type="checkbox" onclick="fullScreen()"></label></li>
+                <li><label>Lifestyle<input type="checkbox"></label></li>
+                <li><label>The Arts<input type="checkbox"></label></li>
+                <li><label>Sneakers<input type="checkbox"></label></li>
+                
+            </ul>
+        </div>
+    </div>
+    <!-- / popover -->
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+    <link rel="stylesheet" href="posts/css/style.css">
+
+    <div id="main" >
+
+  
+  
+
+        <div id="setFilter" class="post" style="display:none">
+
+            <form name="filter" id="filterform" autocomplete="off">
+
+                <div class="km-filter-wrap">
+                    <input type="search" id="srchterm" value="" placeholder="Search..." />
+                    <a href="#" class="km-filter-reset" title="Clear" style="display: none;">
+                        <span class="km-icon km-clear"></span>
+                        <span class="km-text">Clear</span>
+                    </a>
+                </div>
+
+                <label class="km-icon-label k-i-user" style="width: 25%;">
+                    <input type="text" style="font-size: 1.1rem; max-width: 30%; border: 0; outline: 0; background: 0 0; margin-left: 2%;padding: 5px;" id="authid" value="1" placeholder="Author ID..." />
+                </label>
+                <input type="text" style="font-size: 1.1rem; max-width: 30%; border: 0; outline: 0; background: 0 0; margin-left: 2%;padding: 5px;" id="includeid" value="6064" placeholder="Post ID..." />
+                <input type="number" style="font-size: 1.1rem; max-width: 30%; border: 0; outline: 0; background: 0 0; margin-left: 2%;padding: 5px;" id="postpg" value="5" placeholder="Posts per page..." />
+                <input type="submit" value="go" onclick="setlocalParams()" style="display:block" />
+            </form>
+        </div>
+        <div id="app" style="background-image: url(loader.gif);background-position: center;">
+            <div class="author-toggle-wrap post" style="display:none">
+                <template v-for="author in authors">
+                    <div class="author-toggle">
+                        <input type="radio"
+                               :id="author"
+                               :value="author"
+                               name="author"
+                               v-model="currentAuthor">
+                        <label :for="author">Author ID: {{ author }}</label>
+                    </div>
+
+                </template>
+
+            </div>
+ 
+            <div class="post-wrapper">
+                <p> <code>{{ currentAuthor }}</code></p>
+                <template v-for="post in posts">
+                    <div class="post" style="border: 1px solid #dfe1e2;margin: 5px 0 30px 0;">
+
+                        <div class="entry-meta" v-if="post._embedded.author[0]" style="font-size: 1.4em; font-weight: bold; margin:0.1em 0.5em 0.5em">
+                            <a class="author-wrap" :href="post._embedded.author[0].link"><img class="avatar" :src="post._embedded.author[0].avatar_urls['48']" />&nbsp; {{ post._embedded.author[0].name }} </a>
+
+
+                        </div>
+                        <!--  <a class="button read-more" :href="post.id" v-html="post.id"></a> -->
+                        <!-- <a v-if="post._embedded['wp:featuredmedia'][0].media_details.sizes['large']" :href="post.link">
+                             <img :src="post._embedded['wp:featuredmedia'][0].media_details.sizes['large'].source_url" /> -->
+                        <a v-if="post._embedded['wp:featuredmedia'][0]" :href="post.link">
+                            <img :src="post._embedded['wp:featuredmedia'][0].source_url" />
+                        </a>
+                        <div class="km-text" v-html="post.title.rendered" style="margin: 1em; font-size: 1.2em;"></div> <!-- class="post-title" -->
+                        <div :id="post.id" class="excerpt" style="border:none" v-if="post.excerpt.rendered" v-html="post.excerpt.rendered" onclick="showFull(this, 'none', id)">Loding posts...</div>
+                        <div :id="post.id" class="excerpt" v-if="post.content.rendered" v-html="post.content.rendered" style="display:none;border:none" onclick="showFull(this, 'none')"></div>
+                        <div class="entry-meta" style="border-top: 1px solid #f1f1f1;" v-if="post._embedded.author[0]">
+
+                            <!--<p> {{ post._embedded.author[0].id }}</p>
+                            <a class="button read-more" :href="post.link">Read More &raquo;</a> -->
+                            <span class="km-icon km-favorites" style="font-size: 1.8em; margin: 0.7em; display: inline-block;"></span>
+                            <a data-role="button" data-rel="modalview" href="#modalview-login"><span class="km-icon km-compose" style="font-size: 1.8em; margin: 0.7em;display: inline-block;"></span></a>
+
+                            <a data-role="button" data-rel="modalview" href="#modalview-login"><span class="km-icon km-share" style="font-size: 1.8em; margin: 0.7em;display: inline-block;"></span></a>
+                            <!--<a class="button read-more" >... &raquo;</a>-->
+                        </div>
+                        <!-- <div class="excerpt" v-if="post.comments" v-html="post.comments"></div>-->
+                        <!-- <div class="excerpt">{{ post._embedded.comments[0].content.rendered }}</div> // must test-->
+                    </div>
+                </template>
+            </div>
+        </div>
+        <div class="notes">
+            <div class="post">
+                <h2 class="post-title"></h2>
+
+
+                <p id="target">Loading...</p>
+            </div>
+           
+            <p id="targetUsers" hidden>Users...</p>
+        </div>
+    </div>
+
+
+    <!-- <script src='https://unpkg.com/vue@2.0.3/dist/vue.js'></script> -->
+    <script src='posts/js/vue.js'></script>
+    <script src="posts/js/index-tmg.js"></script>
+
+    <script>
+        //duplicated from js/index.js //post.
+        function showFull(elmnt, disp, postid) {
+            var GetPostid = postid;
+            elmnt.style.display = disp;
+            elmnt.id = elmnt.id + 'hidden';
+            // alert(name);
+            document.getElementById(GetPostid).style.display = 'block';
+            // this('div').className = "excerpt hide";
+        }
+    </script>
+    <!-- modal-->
+    <div data-role="modalview" id="modalview-login" style="width: 90%;">
+        <div data-role="header">
+            <div data-role="navbar">
+                <span>Login</span>
+                <a data-click="closeModalViewLogin" data-role="button" data-align="right">Cancel</a>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset">
+            <li><label for="username">Username: <input type="text" id="username" /></label></li>
+            <li><label for="password">Password: <input type="password" id="password" /></label></li>
+        </ul>
+        <div data-role="footer">
+            <div data-role="navbar">
+                <a data-click="closeModalViewLogin" id="modalview-login-button" type="button" data-role="button" data-align="right">Login</a>
+                <a data-click="closeModalViewLogin" id="modalview-reg-button" type="button" data-role="button" data-align="right">Register</a>
+            </div>
+        </div>
+    </div>
+    <!-- modal-->
+    <style type="text/css" media="screen">
+        h1.app-logo {
+            margin: 3em 0;
+            font-size: 3em;
+            font-weight: 100;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: .9em;
+        }
+
+        .action-buttons {
+            margin: 1em;
+        }
+    </style>
+    <script>
+        function closeModalViewLogin() {
+            $("#modalview-login").kendoMobileModalView("close");
+        }
+    </script>
+
+    <script>
+        function closeParentPopover(e) {
+
+            var popover = e.sender.element.closest('[data-role=popover]').data('kendoMobilePopOver');
+
+            popover.close();
+        }
+    </script>
+</div>

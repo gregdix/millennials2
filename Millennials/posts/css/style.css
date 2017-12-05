@@ -1,0 +1,148 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito:300);
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-weight: 300;
+    //padding: 2em;
+    color: #666;
+    background-color: #f1f1f1;
+}
+
+pre {
+  overflow: scroll;
+  padding: 1em .5em;
+  background: #f4f4f4;
+}
+
+#main {
+    margin: 1px;
+    word-wrap: break-word;
+    overflow: hidden;
+    background-color: #f5f5f5;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0;
+  font-family: Nunito, sans-serif;
+  color: #2e3641;
+}
+
+a {
+  color: #fc781f;
+}
+
+.author-toggle-wrap {
+  display: block;
+  padding: 1em;
+  overflow: hidden;
+}
+
+.author-toggle {
+  display: inline-block;
+  width: 40%;
+  margin: 5%;
+  float: left;
+  margin-bottom: 1em;
+}
+
+.post {
+    font-size: 14px;
+    font-weight: 300;
+    border: 1px solid #ececec;
+    border-left: none;
+    border-right: none;
+    padding: 1em 0 0 0;
+    border-radius: 0px;
+    margin: 5px 0 10px 0;
+    background-color: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.post-title {
+    display: block;
+    font-family: Nunito, sans-serif;
+    margin: 0 10px 10px 12px;
+    font-size: 1.1em;
+    margin-bottom: 1em;
+    color: #2e3641;
+}
+
+.post-title a {
+  color: #2e3641;
+  text-decoration: none;
+}
+.post-title a:hover {
+  color: #fc781f;
+}
+
+.excerpt {
+    padding: 0em 1em;
+    border-bottom: 1px solid #f1f1f1;
+    border-top: 1px solid #f1f1f1;
+}
+
+.entry-meta {
+    display: block;
+    text-transform: uppercase;
+    font-family: Nunito, sans-serif;
+    margin: 1em 1em 1em;
+    overflow: hidden;
+    line-height: 2;
+}
+.entry-meta .author-wrap {
+  float: left;
+  display: inline-block;
+  padding: 0;
+  text-decoration: none;
+  color: #2e3641;
+}
+.entry-meta .author-wrap:hover {
+  color: #fc781f;
+}
+.entry-meta .author-wrap span {
+  display: inline-block;
+  padding: .75em 0;
+}
+.entry-meta .author-wrap .avatar {
+  float: left;
+  border-radius: 50%;
+  margin-right: .5em;
+}
+.entry-meta .read-more {
+  float: right;
+}
+
+@media (max-width: 25em) {
+  .entry-meta {
+    font-size: .75em;
+  }
+  .entry-meta .avatar {
+    width: 32px;
+    height: 32px;
+  }
+}
+a.button {
+  display: inline-block;
+  padding: .75em 1em;
+  background: #fc781f;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: Nunito, sans-serif;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+img {
+  max-width: 100%;
+}
+.youtube-player{
+ width:100%;
+ height:auto;
+}
+.hide{
+    display:none;
+}
