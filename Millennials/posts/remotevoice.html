@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en" ng-app="ToDo" style="height: 100%;">
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" />
+  <title>todo</title>
+    
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+   
+   
+  <style>
+      body {
+          padding: 10px!important;
+          background-color: #f1f1f1;
+      }
+    .done { 
+      text-decoration: line-through;
+      color: #ccc;
+    }
+	.fast-search-list-item {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.list-group {
+    padding-left: 0;
+    margin-bottom: 20px;
+}
+      .todoText {
+          width: 95%;
+      }
+      .addBtn {
+          width: 45%;
+          height: 35px;
+      }
+      .stBtns {
+          width: 99% !important;
+          margin-bottom: 10px;
+          height: 35px;
+          display:block;
+
+      }
+      .clrBtn {
+          width: 45% !important;
+         margin-bottom: 10px;
+          height: 35px;
+          display: block;
+          float: right;
+          margin-top: -55px;
+      }
+    
+      .hide{
+          display:none;
+      }
+      .listHolder {
+          overflow: auto;
+          max-height: 400px;
+          padding: 1px;
+          border-top: 1px solid #ccc;
+          border-bottom: 1px solid #ccc;
+      }
+
+     input[type="checkbox"] {
+          margin: 4px 0 0;
+          margin-top: 1px \9;
+          line-height: normal;
+          margin-right: 10px;
+      }
+  </style>
+    <script>
+        function startAn(){
+            annyang.start();
+            document.getElementById('strt').className = 'stBtns hide';
+            document.getElementById('stp').className = 'stBtns';
+        }
+        function stopAn(){
+            //annyang.done();
+            window.location = 'ezidemo.html';
+        }
+    </script>
+</head>
+<body style="font-family: sans-serif; padding: 0px; margin: 0px; height: 100%;">
+    <input class="stBtns" id="strt" type="button" value="start" onclick="startAn()"/>
+    <textarea id="todotext" cols="30" rows="5" class="todoText hide"></textarea>
+  <div ng-controller="todoController">
+    <form name="frm" ng-submit="addTodo()">
+      <input style="width: 95%;" type="text" name="newtodo" id="todoinput" ng-model="newTodo" required />
+       
+      <button id="adBtn" class="addBtn">Add</button>
+       <!-- <button id="adBtn" ng-disabled="frm.$invalid" class="addBtn">Add</button>-->
+    </form>
+    <button class="clrBtn" ng-click="clearCompleted()">Clear Completed</button>
+      <div class="listHolder">
+          <a href="#last">Last</a>
+          <ul class="list-group" style="margin: 15px 0px 10px 0px;">
+              <li class="list-group-item fast-search-list-item" ng-repeat="todo in todos track by $index">
+                  <input type="checkbox" ng-model="todo.done" />{{$index+1}}
+                  <span id="{{$index+1}}" ng-class="{'done':todo.done}">{{todo.title}}</span>
+              </li>
+              <li id="last">...</li>
+          </ul>
+         
+      </div>
+  </div>
+  <div id="match" style="display:block; text-align: center;">...</div>
+    <input class="stBtns hide" id="stp" type="button" value="stop" onclick="stopAn()" />
+  <iframe src="" id="frm1" height="99.5%" width="100%" frameborder="0" scrolling="auto" ></iframe>
+  <script src="../bower_components/annyang/annyang.js"></script>
+  <script src="../bower_components/angular/angular.min.js"></script>
+  <script>
+  angular.module('ToDo',[]).
+  controller('todoController',['$scope',function($scope){
+    $scope.todos = JSON.parse(localStorage.getItem('todos')) || []
+
+    /*
+    $scope.todos = [
+      {'title':'Build a todo app', 'done':false}
+      ];
+    */
+
+    $scope.addTodo = function(){
+      $scope.todos.push({'title':$scope.newTodo,'done':false})
+      $scope.newTodo = ''
+    }
+    $scope.clearCompleted = function(){
+      $scope.todos = $scope.todos.filter(function(item){
+        return !item.done
+      })
+    }
+
+    $scope.$watch('todos', function(newValue, oldValue){
+      if(newValue != oldValue ){
+        localStorage.setItem('todos', JSON.stringify(newValue))
+      }
+    },true)
+
+    var commands = {
+      'new item *val' : function(val){
+        $scope.newTodo = val;
+        $scope.addTodo();
+        $scope.$apply();
+
+		checkAction(val);
+      },
+      'check number *val' : function(val){
+        $scope.todos[parseInt(val)-1].done = true;
+        $scope.$apply();
+      },
+	  'reset number *val' : function(val){
+        $scope.todos[parseInt(val)-1].done = false;
+        $scope.$apply();
+      },
+      'remove number *val':function(val){
+        $scope.todos.splice(parseInt(val)-1,1)
+        $scope.$apply()
+      },
+	   'send email':function(val){
+        alert('Email Who?');
+      },
+       'hello': function (val) {
+           alert('Hello..howare you?');
+       },
+       'voice': function (val) {
+           alert('I can hear you');
+       },
+       'stop voice': function (val) {
+          // alert('Stopping voice recognition');
+           stopAn();
+           
+       },
+       'add note *val': function (val) {
+           document.getElementById('todotext').className = 'todoText';
+           $scope.newTodo = val;
+           document.getElementById('todotext').value = val;
+           document.getElementById('todoinput').value = val;
+          // document.getElementById('todoinput').className = 'ng-dirty ng-valid ng-valid-required';
+          
+         //  $scope.addTodo();
+         //  $scope.$apply();
+         //  checkAction(val);
+       },
+       'save note': function (val) {
+          
+           val = document.getElementById('todotext').value;
+           $scope.newTodo = val;
+             $scope.addTodo();
+             $scope.$apply();
+             checkAction(val);
+             document.getElementById('todotext').className = 'todoText hide';
+       },
+       'check': function (val) {
+           // alert('Stopping voice recognition');
+           $('#adBtn').trigger('submit');
+         //  var idcheck = parseInt(val) - 1;
+          // alert(idcheck);
+       },
+       'email number *val': function (val) {
+           $scope.todos[parseInt(val) - 1].done = false;
+           document.getElementById('todotext').className = 'todoText';
+           var elID = val;
+           document.getElementById('todotext').value = document.getElementById(elID).innerHTML;
+          // $scope.$apply();
+       },
+	  'send sms':function(val){
+        sendSMS();
+      },
+	  'Google search *val':function(val){
+        newTabURL = 'https://www.google.co.za/search?q=' + val;
+		newTab();
+      },
+	  
+	   'new search *val':function(val){
+		  //h ttps://www.google.com/search?q=%http://yourhttpsite.com&btnI=Im+Feeling+Lucky
+        //newTabURL = 'https://www.google.com/search?q=%http://' + val + '&btnI=Im+Feeling+Lucky';
+		//Trgt = ' , "_self"';
+		
+		//newTabURL = 'http://' + val;
+		openUrlSearch(val);
+      },
+	  'open url *val':function(val){
+		  //https://www.google.com/search?q=%http://yourhttpsite.com&btnI=Im+Feeling+Lucky
+        //newTabURL = 'https://www.google.com/search?q=%http://' + val + '&btnI=Im+Feeling+Lucky';
+		Trgt = ' , "_self"';
+		newTabURL = 'http://' + val;
+		openUrlDuplicate(val);
+      },
+      'clear all':function(){
+        $scope.clearCompleted();
+        $scope.$apply();
+      }
+    }
+
+    annyang.addCommands(commands);
+    annyang.debug();
+  //  annyang.start();
+
+    }])
+
+var newTabURL = '';	
+function checkAction(val){
+	//document.getElementById('match').innerHTML= val;
+	//https://www.google.co.za/search?q=
+	if(val == 'hello'){document.getElementById('match').innerHTML='Matched to hello';}
+	//if(val == 'Google search'){ findText(val);}
+	//else{document.getElementById('match').innerHTML='No Match' }
+	}
+	
+function newTab() {
+    window.open(newTabURL);
+}
+function findText(val) {
+    var str = val;
+    var n = str.includes("Google search");
+	if(n == true){
+		var res = str.replace("Google search", "");
+		document.getElementById("match").innerHTML = n;
+		newTabURL = res;
+		newTab();
+		}
+    
+}
+function sendSMS(){
+	document.getElementById("frm1").src = '.php?name1=value1&name2=value2';
+}
+
+function setFrmSrc(val){
+	//document.getElementById("frm1").src = newTabURL;
+	
+	//newTabURL = 'https://www.' + val;
+	//document.getElementById("frm1").src = newTabURL;
+	//document.getElementById("match").innerHTML = newTabURL;
+	//window.open(newTabURL);
+}
+function openUrlDuplicate(val){
+	//document.getElementById("frm1").src = '.php?name1=value1&name2=value2';
+	// window.open("https://test.stickyginger.co.za/demos/todo/static/index.html");
+	window.open(newTabURL);
+	
+}
+
+function openUrlSearch(val){
+	//document.getElementById("frm1").src = '.php?name1=value1&name2=value2';
+	// window.open("https://test.stickyginger.co.za/demos/todo/static/index.html");
+	if(val == 'restaurants'){document.getElementById("frm1").src = 'http://localhost/dev/demos/todovoice/static/maps/mbx-r.html#restaurants';}
+	if(val == 'fitness centres'){document.getElementById("frm1").src = 'http://localhost/dev/demos/todovoice/static/mbx-tst1.html#fitness';}
+	if(val == 'gas stations'){document.getElementById("frm1").src = 'http://localhost/dev/demos/todovoice/static/mbx-tst1.html#gas';}
+	if(val == 'A T M'){document.getElementById("frm1").src = 'http://localhost/dev/demos/todovoice/static/mbx-tst1.html#banks';}
+	if(val == 'shopping mall'){document.getElementById("frm1").src = 'http://localhost/dev/demos/todovoice/static/maps/mbx-mall.html#shopping';}
+	if(val == 'groceries'){document.getElementById("frm1").src = 'http://localhost/dev/demos/todovoice/static/mbx-tst1.html#groceries';}
+	if(val == 'coffee shop'){document.getElementById("frm1").src = 'http://localhost/dev/demos/todovoice/static/maps/mbx-coffee.html#coffee';}
+	if(val == 'pharmacy'){document.getElementById("frm1").src = 'http://localhost/dev/demos/todovoice/static/mbx-tst1.html#pharmacy';}
+	if(val == 'test'){document.getElementById("frm1").src = 'http://localhost/dev/demos/todovoice/static/maps/mbx-1.html#test';}
+	//document.getElementById("match").innerHTML = document.getElementById("frm1").src;
+	document.getElementById("match").innerHTML = val;
+	
+	window.open(newTabURL, "_self");
+	
+}
+
+//.php?name1=value1&name2=value2 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx
+</script>
+</body>
+</html>

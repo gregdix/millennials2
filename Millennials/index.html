@@ -107,14 +107,17 @@
             color: #32364c;
             background-color: rgb(33, 33, 33);
         }
+             .betaStyle{
+                 display:none;
+             }
     </style>
         
     </head>
-    <body id="examples">
+    <body id="examples" style="background-color: #212121;">
     
     <!-- circ menu -->
     <nav id="circMen" class="c-circle-menu js-menu" style=" z-index:5999; bottom:55px;">
-        <button id="btncX" class="c-circle-menu__toggle js-menu-toggle" style="background-image: url(images/icon-nav3.png); background-size: contain; border: 0px solid #1d1d1d;right: 300%; bottom: -50px; opacity: 0.0;">
+        <button id="btncX" class="c-circle-menu__toggleX js-menu-toggleX" style="background-image: url(images/icon-nav3.png); background-size: contain; border: 0px solid #1d1d1d;right: 300%; bottom: -50px; opacity: 0.0;">
             <span style="display: none;">Toggle</span>
         </button>
         <ul class="c-circle-menu__items">
@@ -226,13 +229,20 @@
             </div>
         </header>
 
-        <div style="background-color: #212121; padding: 0em 0; text-align: center;"><a href="posts/index-premote.html" class="" data-role="listview-link"><img src="images/bg1.png" width="100%" height="auto" onclick="homeLogo()"></a></div>
+        <div style="background-color: #212121; padding: 0em 0; text-align: center;">DB connection error:-CODE [404]<a href="posts/index-premoteX.html" class="" data-role="listview-link"><img src="images/bg1.png" width="100%" height="auto" onclick="homeLogo()"></a>
+             <!--<iframe src="posts/remotevoice.html" height="500px" width="100%" scrolling="auto"style="position: absolute;top: 100px; left:0px;"></iframe>-->
+        </div>
         
     </div>
 
     <div data-role="view" id="tabstrip-profile" data-title="Profile" data-layout="mobile-tabstrip">
-        <img src="images/eduardo.jpg" class="km-thumbnail" style="width: 10em; height: 10em; margin: 2em auto; display: block; float: none;">
-        <ul data-role="listview" data-style="inset" data-type="group">
+         <ul>
+             <li>[01]Login-Profile error</li>       
+             <li>403:Database Connection code 00</li>
+                    
+                </ul>
+        <img src="images/eduardo.jpg" class="km-thumbnail betaStyle" style="width: 10em; height: 10em; margin: 2em auto; display: none; float: none;">
+        <ul data-role="listview" data-style="inset" data-type="group" class="betaStyle">
             <li>
                 Profile
                 <ul>
@@ -253,8 +263,13 @@
                       
         </ul>
     </div>
-    <div data-role="view" id="tabstrip-sales" data-title="Sales History" data-layout="mobile-tabstrip">
-        <ul data-role="listview" data-style="inset" data-type="group">
+    <div data-role="view" id="tabstrip-sales" data-title="Compose" data-layout="mobile-tabstrip">
+        <ul>
+             <li>[01]Compose- error</li>       
+             <li>403:Database Connection code 02</li>
+                    
+                </ul>
+        <ul data-role="listview" data-style="inset" data-type="group" class="betaStyle">
             <li>
                 Sales 2011
                 <ul>
@@ -274,8 +289,13 @@
             </li>
         </ul>
     </div>
-    <div data-role="view" id="tabstrip-rating" data-title="Rating" data-layout="mobile-tabstrip">
-        <ul data-role="listview" data-style="inset" data-type="group">
+    <div data-role="view" id="tabstrip-rating" data-title="..." data-layout="mobile-tabstrip">
+        <ul>
+             <li>[02]DBDbb- error</li>       
+             <li>403:Database Connection code 02</li>
+                    
+                </ul>
+        <ul data-role="listview" data-style="inset" data-type="group" class="betaStyle">
             <li>
                 Sales Representatives
                 <ul>
@@ -289,8 +309,13 @@
             </li>
         </ul>
     </div>
-    <div data-role="view" id="tabstrip-settings" data-title="Settings" data-layout="mobile-tabstrip">
-        <ul data-role="listview" data-style="inset" data-type="group">
+    <div data-role="view" id="tabstrip-settings" data-title="Inbox" data-layout="mobile-tabstrip" >
+        <ul>
+             <li>[03]Data Connection - error</li>       
+             <li>403:Database Connection code 02</li>
+                    
+                </ul>
+        <ul data-role="listview" data-style="inset" data-type="group" class="betaStyle">
             <li>
                 Eduardo Batista
                 <ul>
@@ -303,7 +328,12 @@
     </div>
     <!--add-->
     <div data-role="view" id="tabstrip-posts" data-title="Posts" data-layout="mobile-tabstrip">
-        <ul data-role="listview" data-style="inset"  data-source="awwDataSourceXX" data-load-more="false" id="awwXX" data-pull-to-refresh="false" data-click="showDetail" class="km-widget km-listview km-list km-virtual-list" style="touch-action: pan-y;">
+        <ul>
+             <li>[04]Latest Posts- error</li>       
+             <li>403:Database Connection code 02</li>
+                    
+                </ul>
+        <ul data-role="listview" data-style="inset"  data-source="awwDataSourceXX" data-load-more="false" id="awwXX" data-pull-to-refresh="false" data-click="showDetail" class="km-widget km-listview km-list km-virtual-list" style="touch-action: pan-y; display:none">
             <li data-uid="e0154738-437f-491b-9ce3-7cf99adbc7c0" style="position: relative;">
                 <img class="km-thumbnail" src="images/rdticon.jpg">
                 <p> aww | 232 | 21:32</p>
@@ -351,7 +381,7 @@
                Compose
               </a><a href="#tabstrip-rating" data-icon="favoritesX" id="btn3" style="background-image:url(images/icon-nav2.png);background-size: 80%; background-repeat: no-repeat; background-position: center;">
               
-              </a><a href="#tabstrip-settings" data-icon="mostviewed" data-badge="21">
+              </a><a href="#tabstrip-settings" data-icon="mostviewed" data-badge="0">
                 Inbox
                 </a><a href="#tabstrip-posts" data-icon="bookmarks">Latest</a>
             </div>
